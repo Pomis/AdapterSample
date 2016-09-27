@@ -31,23 +31,38 @@ public class CarAdapter extends ArrayAdapter{
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder;
+        Car selectedCar = (Car) list.get(position);
 
-        //if (convertView==null){
+        if (convertView==null){
             LayoutInflater inflater = activity.getLayoutInflater();
             convertView = inflater.inflate(resource, null);
 
-            TextView nameTextView = (TextView) convertView.findViewById(R.id.tv_car_name);
-            TextView mileageTextView = (TextView) convertView.findViewById(R.id.tv_car_mileage);
-            TextView costTextView = (TextView) convertView.findViewById(R.id.tv_cost);
+            viewHolder = new ViewHolder();
+
+            viewHolder.nameTextView = (TextView) convertView.findViewById(R.id.tv_car_name);
+            viewHolder.mileageTextView = (TextView) convertView.findViewById(R.id.tv_car_mileage);
+            viewHolder.costTextView = (TextView) convertView.findViewById(R.id.tv_cost);
 
 
-            Car selectedCar = (Car) list.get(position);
 
-            nameTextView.setText(selectedCar.name);
-            mileageTextView.setText(selectedCar.mileage);
-            costTextView.setText(String.valueOf(selectedCar.cost));
-        //}
+
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+
+
+        viewHolder.nameTextView.setText(selectedCar.name);
+        viewHolder.mileageTextView.setText(selectedCar.mileage);
+        viewHolder.costTextView.setText(String.valueOf(selectedCar.cost));
 
         return convertView;
+    }
+
+    class ViewHolder{
+        TextView nameTextView;
+        TextView mileageTextView;
+        TextView costTextView;
     }
 }
